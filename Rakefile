@@ -10,6 +10,9 @@ task :init do
   $dir_repo = "#{$dir_temp}/repo"
   $dir_repo_project = "#{$dir_repo}/Project"
 
+  $dir_tools = resolve_path File.expand_path('tools')
+  $dir_tools_copyrighter = resolve_path "#{$dir_tools}/copyrighter"
+
 end
 
 task :clean => [:init] do
@@ -55,7 +58,7 @@ task :fix_projects => [:init, :resolve_version] do
     files = files.concat fix_version($package_version)
 
     # copyrights
-    files = files.concat fix_copyrights(resolve_path $dir_repo_project)
+    files = files.concat fix_copyrights(resolve_path($dir_repo_project), $dir_tools_copyrighter)
 
     # push changes
     Git.commit_and_push $dir_repo, $git_branch, files if files.length > 0

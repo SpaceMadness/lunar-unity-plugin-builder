@@ -65,33 +65,43 @@ def fix_version(version)
 
 end
 
-def fix_copyrights(dir_project)
+def fix_copyrights(dir_project, dir_headers)
 
   print_header 'Fixing copyright...'
 
   modified_files = []
 
+  file_header = resolve_path "#{dir_headers}/copyright.txt"
+  copyright_header = File.read file_header
+
   Dir["#{dir_project}/**/*.cs"].each do |file|
-    modified_files.push file if fix_copyright file
+    modified_files.push file if fix_copyright(file, copyright_header)
   end
 
   return modified_files
 
 end
 
-def fix_copyright(file)
+def fix_copyright(file, header)
 
-  old_text = File.read file
+  old_source = File.read file
 
-  copyright = Copyright.new old_text
+  source_no_header = Copyright.remove_header_comment old_source
+
+  copyright = Copyright.new header
   copyright.set_param 'date.year', Time.now.year.to_s
   copyright.set_param 'file.name.ext', File.basename(file)
   copyright.set_param 'file.name', File.basename(file, '.*')
 
-  new_text = copyright.process
+  new_source = copyright.process
+  new_source << "\n\n"
+  new_source << source_no_header
 
-  if new_text != old_text
-    File.write file, new_text
+  if new_source != old_source
+
+    File.open(file, 'w') { |f|
+      f.write new_source
+    }
     return true
   end
 
