@@ -46,13 +46,13 @@ class Copyright
 
   def self.remove_header_comment(text)
 
-    lines = text.split "\n"
+    lines = text.lines "\n"
 
     index = find_first_non_comment_line_index lines
     return text if index == 0
 
     lines = lines[index..lines.length]
-    return lines.join "\n"
+    return lines.join
 
   end
 

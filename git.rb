@@ -18,7 +18,7 @@ class Git
       files.each { |file|
         exec_shell %(git add "#{file}"), "Can't add file: #{file}"
       }
-      exec_shell %(git commit -m "Updated SDK files by builder" --author "GH-automator <placeplayhood@gmail.com>"), "Can't commit to git"
+      exec_shell 'git commit -m "Project fixes: versions, copyrights, etc" --author "Space Cadet Stimpy <a.lementuev+cadet+stimpy@gmail.com>"', "Can't commit to git"
       exec_shell %(git push origin #{branch}), "Can't push to git"
     end
 
