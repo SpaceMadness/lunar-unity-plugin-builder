@@ -54,9 +54,6 @@ task :fix_projects => [:init, :resolve_version] do
 
     files = []
 
-    # versions
-    files = files.concat fix_version($package_version)
-
     # copyrights
     files = files.concat fix_copyrights(resolve_path($dir_repo_project), $dir_tools_copyrighter)
 

@@ -56,15 +56,6 @@ def exec_shell(command, error_message, options = {})
   return result
 end
 
-def fix_version(version)
-
-  print_header 'Fixing versions...'
-
-  modified_files = []
-  return modified_files
-
-end
-
 def fix_copyrights(dir_project, dir_headers)
 
   print_header 'Fixing copyright...'
@@ -75,6 +66,9 @@ def fix_copyrights(dir_project, dir_headers)
   copyright_header = File.read file_header
 
   Dir["#{dir_project}/**/*.cs"].each do |file|
+
+    next if File.basename(file) == 'Plist.cs' # FIXME: make a better filter for ignored files
+
     modified_files.push file if fix_copyright(file, copyright_header)
   end
 
