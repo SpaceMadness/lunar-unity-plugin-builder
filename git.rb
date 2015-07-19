@@ -24,4 +24,13 @@ class Git
 
   end
 
+  def self.git_merge(dir_repo, from_branch, to_branch, message = nil)
+    message = %(Merged branch '#{from_branch}' into #{to_branch}) if message == nil
+    Dir.chdir dir_repo do
+      exec_shell(%(git branch #{to_branch} --force), "Can't switch a branch '#{to_branch}")
+      exec_shell(%(git merge #{from_branch} -X ours -m "#{message}"), "Can't merge a branch")
+      exec_shell("git push origin #{to_branch} --force", "Can't push branch to remote")
+    end
+  end
+
 end
