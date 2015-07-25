@@ -35,6 +35,13 @@ end
 
 ############################################################
 
+def extract_regex(text, pattern)
+  text =~ pattern
+  return $1
+end
+
+############################################################
+
 # checks if path exists and returns it
 def resolve_path(path)
   fail_script_unless_file_exists path
