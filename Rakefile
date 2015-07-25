@@ -111,9 +111,7 @@ def github_create_release(dir_repo, version, package_zip)
     exec_shell cmd, "Can't remove old release", :dont_fail_on_error => true
 
     # create a release
-    release_notes_strings = not_nil (get_release_notes '.', version)
-    fail_script_unless release_notes_strings.length > 0, "Can't read release notes"
-
+    release_notes_strings = [ 'Created by buildsystem'] # FIXME!
     release_notes = release_notes_strings.join('')
 
     cmd  = %("#{github_release_bin}" release)
