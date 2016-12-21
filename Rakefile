@@ -35,7 +35,7 @@ task :resolve_version => [:init] do
 
   def extract_package_version(dir_project)
 
-    file_version = resolve_path "#{dir_project}/Assets/Plugins/Lunar/Version.cs"
+    file_version = resolve_path "#{dir_project}/Assets/LunarPlugin/Scripts/CVersion.cs"
     source = File.read file_version
 
     source =~ /VERSION\s+=\s+"(\d+\.\d+.\d+b?)"/
